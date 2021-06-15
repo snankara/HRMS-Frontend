@@ -1,4 +1,5 @@
 # HRMS Project
+This project is a React project.
 
 ## Technologies
 
