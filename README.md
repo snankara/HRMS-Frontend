@@ -20,6 +20,7 @@ This project is a React project.
 
 ### UML Component Diagram
 
+![](https://github.com/snankara/HRMS-Frontend/blob/master/src/assets/img/imagesForGithub/HrmsUmlDiagram.jpg)
 
 ## Contact
 
