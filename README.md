@@ -6,8 +6,6 @@ This project is a React project.
 + React
 + Javascript
 + Reactstrap
-+ Moment
-+ Axios
 + HTML 5
 + CSS
 + SCSS
@@ -15,6 +13,9 @@ This project is a React project.
 ## Front End Techniques
 
 + Services
++ Axios
++ Moment
++ Redux
 
 ## Images
 
