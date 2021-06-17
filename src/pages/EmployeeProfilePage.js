@@ -21,6 +21,7 @@ import EmployeeProfileNav from "components/Navbars/EmployeeProfileNav.js";
 import JobAdvertisementService from "services/jobAdvertisementService";
 import moment from "moment";
 import { useFormik } from "formik";
+import { ToastContainer, toast } from 'react-toastify'
 
 function EmployeeProfilePage() {
     const [pills, setPills] = useState("1");
@@ -35,8 +36,7 @@ function EmployeeProfilePage() {
         onSubmit: value => {
             let jobAdvertisementService = new JobAdvertisementService();
             value.jobAdvertisement = jobAdvertisement;
-            { console.log(value.jobAdvertisement) }
-            jobAdvertisementService.activateJobAdvertisement(value.jobAdvertisement).then(result => {console.log(result.data.message)});
+            jobAdvertisementService.activateJobAdvertisement(value.jobAdvertisement).then(toast.success("Onaylandı !"));
         }
     });
 
@@ -59,6 +59,7 @@ function EmployeeProfilePage() {
 
     return (
         <>
+            <ToastContainer position="bottom-right"/>
             <EmployeeProfileNav />
             <div className="wrapper">
                 <EmployeeProfileHeader />

@@ -6,7 +6,6 @@ export default class JobAdvertisementService{
     }
 
     add(values){
-        // {console.log(values)}
         return axios.post("http://localhost:8080/api/jobAdvertisements/add", values)
     }
 
@@ -16,5 +15,9 @@ export default class JobAdvertisementService{
 
     activateJobAdvertisement(jobAdvertisement){
         return axios.put(`http://localhost:8080/api/jobAdvertisements/activateJobAdvertisement`,jobAdvertisement)
+    }
+
+    getAllByActiveAndPageable(isActive, pageNo, pageSize){
+        return axios.get(`http://localhost:8080/api/jobAdvertisements/getAllByActiveAndPageable?isActive=${isActive}&pageNo=${pageNo}&pageSize=${pageSize}`)
     }
 }

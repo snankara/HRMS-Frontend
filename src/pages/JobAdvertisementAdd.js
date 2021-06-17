@@ -56,7 +56,7 @@ export default function JobAdvertisementAdd() {
         wokingTimeService.getAll().then(result => setWorkingTimes(result.data.data))
     }, [])
 
-    const { values, errors, handleChange, handleSubmit, touched } = useFormik({ 
+    const { values, errors, handleChange, handleSubmit, touched } = useFormik({
         initialValues: {
             employer: "",
             city: "",
@@ -147,7 +147,7 @@ export default function JobAdvertisementAdd() {
                                         className="dropdown-text-color"
                                         onClick={(e) => e.preventDefault()}
                                     >
-                                      <span className="dropdown-text-color"> {selectedJobPosition.positionName || 'Seçiniz'} </span>
+                                        <span className="dropdown-text-color"> {selectedJobPosition.positionName || 'Seçiniz'} </span>
                                     </DropdownToggle>
                                     <DropdownMenu center="true">
                                         <DropdownItem header>
@@ -255,7 +255,7 @@ export default function JobAdvertisementAdd() {
                                         className="dropdown-text-color"
                                         onClick={(e) => e.preventDefault()}
                                     >
-                                       <span className="dropdown-text-color"> {selectedWorkingTime.workingTimeName || 'Seçiniz'} </span>
+                                        <span className="dropdown-text-color"> {selectedWorkingTime.workingTimeName || 'Seçiniz'} </span>
                                     </DropdownToggle>
                                     <DropdownMenu center="true">
                                         <DropdownItem header>

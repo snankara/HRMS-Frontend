@@ -1,3 +1,4 @@
+import HomePageFooter from 'components/Footers/HomePageFooter'
 import Header from 'components/Headers/Header'
 import Navi from 'components/Navbars/Navi'
 import Dashboard from 'layouts/Dashboard'
@@ -13,6 +14,7 @@ export default function HomePage() {
                 <Dashboard/>
             </div>
         </div>
+        <HomePageFooter/>
     </>
     )
 }
