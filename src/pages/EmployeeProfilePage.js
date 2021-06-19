@@ -10,35 +10,16 @@ import {
     Row,
     Col,
     UncontrolledTooltip,
-    Card,
-    CardHeader,
-    Form,
 } from "reactstrap";
 
 import EmployeeProfileHeader from "components/Headers/EmployeeProfileHeader.js";
 import ProfileFooter from "components/Footers/ProfileFooter.js";
 import EmployeeProfileNav from "components/Navbars/EmployeeProfileNav.js";
-import JobAdvertisementService from "services/jobAdvertisementService";
-import moment from "moment";
-import { useFormik } from "formik";
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
+import JobAdvertisementListForApproval from "./JobAdvertisementListForApproval";
 
 function EmployeeProfilePage() {
     const [pills, setPills] = useState("1");
-    const [jobAdvertisements, setJobAdvertisements] = useState([])
-    const [jobAdvertisement, setJobAdvertisement] = useState({})
-
-    const { value, errors, handleChange, handleSubmit, touched } = useFormik({ 
-        initialValues: {
-            jobAdvertisement: ""
-        },
-
-        onSubmit: value => {
-            let jobAdvertisementService = new JobAdvertisementService();
-            value.jobAdvertisement = jobAdvertisement;
-            jobAdvertisementService.activateJobAdvertisement(value.jobAdvertisement).then(toast.success("Onaylandı !"));
-        }
-    });
 
     useEffect(() => {
         document.body.classList.add("profile-page");
@@ -52,14 +33,9 @@ function EmployeeProfilePage() {
         };
     }, []);
 
-    useEffect(() => {
-        let jobAdvertisementService = new JobAdvertisementService();
-        jobAdvertisementService.getByIsActive(false).then(result => setJobAdvertisements(result.data.data))
-    }, [])
-
     return (
         <>
-            <ToastContainer position="bottom-right"/>
+            <ToastContainer position="bottom-right" />
             <EmployeeProfileNav />
             <div className="wrapper">
                 <EmployeeProfileHeader />
@@ -101,7 +77,7 @@ function EmployeeProfilePage() {
                         </h5>
 
                         <Row>
-                            <Col className="ml-auto mr-auto" md="6">
+                            <Col className="ml-auto mr-auto" md="12">
                                 <h4 className="title text-center">My Portfolio</h4>
                                 <div className="nav-align-center">
                                     <Nav
@@ -148,69 +124,10 @@ function EmployeeProfilePage() {
                                     </Nav>
                                 </div>
                             </Col>
-                            <TabContent className="gallery" activeTab={"pills" + pills}>
+                            <Col style={{marginTop:'50px'}}>
+                            <TabContent activeTab={"pills" + pills}>
                                 <TabPane tabId="pills1">
-                                    <Row>
-
-                                            {jobAdvertisements.map(jobAdvertisement => (
-                                                <Col md="12" key={jobAdvertisement.id} className="collections" className="ml-auto mr-auto">
-                                                    <Card className="ds">
-                                                        <CardHeader>
-
-                                                            <div className="team-player">
-                                                                <div className="mtx10">
-                                                                    <div className="ds">
-                                                                        <img
-                                                                            alt="..."
-                                                                            width="80px" height="auto"
-                                                                            src={require("assets/img/file.png").default}
-                                                                        ></img>
-                                                                    </div>
-                                                                    <div className="ds">
-                                                                        <h4 className="modal-title">
-                                                                            {jobAdvertisement.employer.companyName}
-                                                                        </h4>
-                                                                        <p className="category text-info">{jobAdvertisement.jobPosition.positionName}</p>
-                                                                    </div>
-                                                                    {/* <div className="fl-r mt10">
-                                                                        <Button className="btn-icon btn-round" outline color="info" type="button">
-                                                                            <i className="now-ui-icons ui-1_send"></i>
-                                                                        </Button>
-                                                                    </div> */}
-                                                                </div>
-                                                                <div className="mtx10 ds">
-                                                                    <div>
-                                                                        <h5 className="ml-xl-3 ds">
-                                                                            Maaş :
-                                                                        </h5>
-                                                                        <span> {jobAdvertisement.minSalary} - {jobAdvertisement.maxSalary}₺</span>
-                                                                    </div>
-                                                                    <div>
-                                                                        <h5 className="ml-xl-3 ds">
-                                                                            Başvuru :
-                                                                        </h5>
-                                                                        <span className="ds"> {moment(jobAdvertisement.startDate).format("ll")} |
-                                                                            {moment(jobAdvertisement.endDate).format(" ll")}</span>
-                                                                    </div>
-                                                                    <h6 className="ml-xl-3">
-                                                                        {jobAdvertisement.city.cityName}
-                                                                    </h6>
-                                                                </div>
-                                                                <div className="ds fl-r position-absolute mr5">
-                                                                    <Form onSubmit={handleSubmit}>       
-                                                                    <Button className="btn-round btn-info" color="info" type="submit" name="jobAdvertisementId" onClick={() => setJobAdvertisement(jobAdvertisement)}>
-                                                                        <i className="now-ui-icons ui-1_check mr5"></i>
-                                                                        <span>Onayla</span>
-                                                                    </Button>
-                                                                    </Form>
-
-                                                                </div>
-                                                            </div>
-                                                        </CardHeader>
-                                                    </Card>
-                                                </Col>
-                                            ))}
-                                    </Row>
+                                    <JobAdvertisementListForApproval />
                                 </TabPane>
                                 <TabPane tabId="pills2">
                                     <Col className="ml-auto mr-auto" md="10">
@@ -273,6 +190,7 @@ function EmployeeProfilePage() {
                                     </Col>
                                 </TabPane>
                             </TabContent>
+                            </Col>
                         </Row>
                     </Container>
                 </div>

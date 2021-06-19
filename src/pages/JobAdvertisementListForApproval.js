@@ -1,53 +1,36 @@
 import moment from 'moment';
-import React, { useState, useEffect } from 'react'
-import {
-    Button,
-    Col,
-    Card,
-    CardHeader,
-    Row,
-    Badge,
-} from "reactstrap";
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
+import { Button, Card, CardHeader, Col, Row } from 'reactstrap';
 import JobAdvertisementService from 'services/jobAdvertisementService';
 
-export default function JobAdvertisementList() {
+export default function JobAdvertisementListForApproval() {
 
     const [jobAdvertisements, setJobAdvertisements] = useState([])
-    let defaultActive = true;
-    let defaultPageNo = 1;
-    let defaultPageSize = 2;
-
 
     useEffect(() => {
         let jobAdvertisementService = new JobAdvertisementService();
-        jobAdvertisementService.getAllByActiveAndPageable(defaultActive, defaultPageNo, defaultPageSize).then(result => setJobAdvertisements(result.data.data))
+        jobAdvertisementService.getByIsActive(false).then(result => setJobAdvertisements(result.data.data))
     }, [])
 
-    function getAllButtonClicked() {
+    function onSubmit(jobAdvertisement) {
         let jobAdvertisementService = new JobAdvertisementService();
-        jobAdvertisementService.getByIsActive(defaultActive).then(result => setJobAdvertisements(result.data.data))
+        jobAdvertisementService.activateJobAdvertisement(jobAdvertisement).then(toast.success("Onaylandı !"));
     }
 
     return (
-        <>
-            <h1 className="text-center text-muted">
-                İş İlanları <br></br>
-                <hr />
-            </h1>
+        <div>
             <Row>
                 {jobAdvertisements.map(jobAdvertisement => (
-
-                    <Col md="6" key={jobAdvertisement.id}>
+                    <Col key={jobAdvertisement.id} md="6">
                         <Card className="ds" style={{ borderRadius: '25px' }}>
                             <CardHeader>
-
                                 <div className="team-player">
                                     <div className="mtx10">
                                         <div className="ds">
                                             <img
                                                 alt="..."
                                                 width="80px" height="auto"
-                                                style={{ marginTop: '-25px' }}
                                                 src={require("assets/img/file.png").default}
                                             ></img>
                                         </div>
@@ -55,12 +38,7 @@ export default function JobAdvertisementList() {
                                             <h4 className="modal-title">
                                                 {jobAdvertisement.employer.companyName}
                                             </h4>
-                                            <p className="category text-info">{jobAdvertisement.jobPosition.positionName} <Badge color="default">{jobAdvertisement.numberOfPosition}</Badge></p>
-                                        </div>
-                                        <div className="fl-r mt10">
-                                            <Button className="btn-icon btn-round" outline color="info" type="button">
-                                                <i className="now-ui-icons ui-1_send"></i>
-                                            </Button>
+                                            <p className="category text-info">{jobAdvertisement.jobPosition.positionName}</p>
                                         </div>
                                     </div>
                                     <div className="mtx10 ds">
@@ -74,7 +52,8 @@ export default function JobAdvertisementList() {
                                             <h5 className="ml-xl-3 ds">
                                                 Başvuru :
                                             </h5>
-                                            <span className="ds"> {moment(jobAdvertisement.startDate).format("ll")} |
+                                            {' '}
+                                            <span className="ds"> {!jobAdvertisement.startDate && 'Onayda Bekliyor'} {jobAdvertisement.startDate} |
                                                 {moment(jobAdvertisement.endDate).format(" ll")}</span>
                                         </div>
                                         <h6 className="ml-xl-3">
@@ -82,32 +61,17 @@ export default function JobAdvertisementList() {
                                         </h6>
                                     </div>
                                     <div className="ds fl-r position-absolute mr5">
-                                        <Button className="btn-round btn-info" color="info" type="button">
-                                            <i className="now-ui-icons ui-1_zoom-bold mr5"></i>
-                                            <span>İncele</span>
+                                        <Button className="btn-round btn-info" color="info" onClick={() => onSubmit(jobAdvertisement)}>
+                                            <i className="now-ui-icons ui-1_check mr5"></i>
+                                            <span>Onayla</span>
                                         </Button>
                                     </div>
                                 </div>
                             </CardHeader>
                         </Card>
                     </Col>
-
                 ))}
             </Row>
-            {jobAdvertisements.length <= 2 &&
-                <div style={{ textAlign: 'center', marginTop: '30px' }}>
-                    <Button
-                        className="btn-round"
-                        color="info"
-                        outline
-                        role="button"
-                        size="lg"
-                        onClick={() => getAllButtonClicked()}
-                    >
-                        Tümünü Gör
-                    </Button>
-                </div>
-            }
-        </>
+        </div>
     )
 }

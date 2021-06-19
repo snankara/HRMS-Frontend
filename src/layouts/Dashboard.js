@@ -1,6 +1,6 @@
 import JobAdvertisementList from 'pages/JobAdvertisementList';
 import React from 'react'
-import { Container, Row } from "reactstrap";
+import { Container } from "reactstrap";
 
 export default function Dashboard() {
 

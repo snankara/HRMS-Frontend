@@ -15,6 +15,7 @@ import {
 import EmployerProfileHeader from "components/Headers/EmployerProfileHeader.js";
 import ProfileFooter from "components/Footers/ProfileFooter.js";
 import EmployerProfileNav from "components/Navbars/EmployerProfileNav.js";
+import { ToastContainer } from "react-toastify";
 
 function EmployerProfilePage() {
   const [pills, setPills] = useState("2");
@@ -33,6 +34,7 @@ function EmployerProfilePage() {
   return (
     
     <>
+    <ToastContainer position="bottom-right" />
       <EmployerProfileNav />
       <div className="wrapper">
         <EmployerProfileHeader />

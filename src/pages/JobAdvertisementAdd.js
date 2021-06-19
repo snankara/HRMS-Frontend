@@ -24,6 +24,7 @@ import WorkingTimeService from 'services/workingTimeService';
 import JobAdvertisementService from 'services/jobAdvertisementService';
 
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 export default function JobAdvertisementAdd() {
 
@@ -56,7 +57,7 @@ export default function JobAdvertisementAdd() {
         wokingTimeService.getAll().then(result => setWorkingTimes(result.data.data))
     }, [])
 
-    const { values, errors, handleChange, handleSubmit, touched } = useFormik({
+    const { values, handleChange, handleSubmit } = useFormik({
         initialValues: {
             employer: "",
             city: "",
@@ -75,13 +76,11 @@ export default function JobAdvertisementAdd() {
             let jobAdvertisementService = new JobAdvertisementService();
             values.city = selectedCity
             values.endDate = moment(selectedDate).format('YYYY-MM-DD')
-            values.startDate = moment().format('YYYY-MM-DD')
             values.jobPosition = selectedJobPosition
             values.typeOfWorking = selectedTypeOfWorking
             values.workingTime = selectedWorkingTime
             values.employer = employer;
-            { console.log(values) }
-            jobAdvertisementService.add(values).then();
+            jobAdvertisementService.add(values).then(toast.success("İlanınız Onaylanmak Üzere Sistem Personeline İletilmiştir."),setModal(false));
         }
     });
 
@@ -113,7 +112,6 @@ export default function JobAdvertisementAdd() {
                         <Row>
                             <Col lg="6" sm="6">
 
-                                <h6 htmlFor="minSalary" className="text-muted" style={{ margin: '0 0 8px 0', padding: '0' }}> Minimum Maaş</h6>
                                 <Input
                                     placeholder="Minimum Maaş"
                                     type="text"
@@ -125,7 +123,6 @@ export default function JobAdvertisementAdd() {
                                     required
                                 ></Input>
 
-                                <h6 htmlFor="numberOfPosition" className="text-muted" style={{ margin: '20px 0 8px 0', padding: '0' }}> Pozisyon Sayısı</h6>
                                 <Input
                                     placeholder="Açık Pozisyon"
                                     type="text"
@@ -135,19 +132,19 @@ export default function JobAdvertisementAdd() {
                                     pattern="^-?[0-9]\d*\.?\d*$"
                                     onChange={handleChange}
                                     required
+                                    style={{ margin: '20px 0 8px 0'}}
                                 ></Input>
 
-                                <h6 htmlFor="numberOfPosition" className="text-muted" style={{ margin: '20px 0 0 0', padding: '0' }}> İş Pozisyonu</h6>
                                 <UncontrolledDropdown>
                                     <DropdownToggle
-                                        style={{ margin: '3px 0 0 -15px' }}
+                                        style={{ margin: '12px 0 0 -15px' }}
                                         caret
                                         color="neutral"
                                         href="#pablo"
                                         className="dropdown-text-color"
                                         onClick={(e) => e.preventDefault()}
                                     >
-                                        <span className="dropdown-text-color"> {selectedJobPosition.positionName || 'Seçiniz'} </span>
+                                        <span className="dropdown-text-color"> {selectedJobPosition.positionName || 'Pozisyon Seçiniz'} </span>
                                     </DropdownToggle>
                                     <DropdownMenu center="true">
                                         <DropdownItem header>
@@ -165,17 +162,16 @@ export default function JobAdvertisementAdd() {
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
 
-                                <h6 htmlFor="numberOfPosition" className="text-muted" style={{ margin: '20px 0 0 0', padding: '0' }}> Çalışma Türü</h6>
                                 <UncontrolledDropdown>
                                     <DropdownToggle
-                                        style={{ margin: '3px 0 0 -15px' }}
+                                        style={{ margin: '12px 0 0 -15px' }}
                                         caret
                                         color="neutral"
                                         href="#pablo"
                                         className="dropdown-text-color"
                                         onClick={(e) => e.preventDefault()}
                                     >
-                                        <span className="dropdown-text-color"> {selectedTypeOfWorking.typeName || 'Seçiniz'} </span>
+                                        <span className="dropdown-text-color"> {selectedTypeOfWorking.typeName || 'Çalışma Türü Seçiniz'} </span>
                                     </DropdownToggle>
                                     <DropdownMenu center="true">
                                         <DropdownItem header>
@@ -194,10 +190,7 @@ export default function JobAdvertisementAdd() {
                                 </UncontrolledDropdown>
 
                             </Col>
-
                             <Col lg="6" sm="6">
-
-                                <h6 htmlFor="maxSalary" className="text-muted" style={{ margin: '0 0 8px 0', padding: '0' }}> Maksimum Maaş</h6>
                                 <Input
                                     placeholder="Maksimum Maaş"
                                     type="text"
@@ -209,25 +202,25 @@ export default function JobAdvertisementAdd() {
                                     required
                                 ></Input>
 
-                                <h6 htmlFor="endDate" className="text-muted" style={{ margin: '20px 0 8px 0', padding: '0' }}> İlan Bitiş Tarihi</h6>
+                                <div style={{ margin: '20px 0 8px 0'}}>
                                 <Datetime
                                     name="endDate"
                                     timeFormat={false}
                                     inputProps={{ placeholder: "Bir Tarih Giriniz" }}
                                     onChange={setSelectedDate}
                                 />
-
-                                <h6 htmlFor="numberOfPosition" className="text-muted" style={{ margin: '20px 0 0 0', padding: '0' }}> Şehir</h6>
+                                </div>
+                                
                                 <UncontrolledDropdown>
                                     <DropdownToggle
-                                        style={{ margin: '3px 0 0 -15px' }}
+                                        style={{ margin: '12px 0 0 -15px' }}
                                         caret
                                         color="neutral"
                                         href="#pablo"
                                         className="dropdown-text-color"
                                         onClick={(e) => e.preventDefault()}
                                     >
-                                        <span className="dropdown-text-color"> {selectedCity.cityName || 'Seçiniz'} </span>
+                                        <span className="dropdown-text-color"> {selectedCity.cityName || 'Şehir Seçiniz'} </span>
                                     </DropdownToggle>
                                     <DropdownMenu center="true"
                                         style={{ overflowY: 'scroll', maxHeight: '300px' }}
@@ -245,17 +238,16 @@ export default function JobAdvertisementAdd() {
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
 
-                                <h6 htmlFor="numberOfPosition" className="text-muted" style={{ margin: '20px 0 0 0', padding: '0' }}> Çalışma Zamanı</h6>
                                 <UncontrolledDropdown>
                                     <DropdownToggle
-                                        style={{ margin: '3px 0 0 -15px' }}
+                                        style={{ margin: '12px 0 0 -15px' }}
                                         caret
                                         color="neutral"
                                         href="#pablo"
                                         className="dropdown-text-color"
                                         onClick={(e) => e.preventDefault()}
                                     >
-                                        <span className="dropdown-text-color"> {selectedWorkingTime.workingTimeName || 'Seçiniz'} </span>
+                                        <span className="dropdown-text-color"> {selectedWorkingTime.workingTimeName || 'Çalışma Zamanı Seçiniz'} </span>
                                     </DropdownToggle>
                                     <DropdownMenu center="true">
                                         <DropdownItem header>
@@ -275,10 +267,9 @@ export default function JobAdvertisementAdd() {
 
                             </Col>
 
-                            <h6 htmlFor="numberOfPosition" className="text-muted" style={{ margin: '20px 0 0 15px', padding: '0' }}> İş Açıklaması</h6>
                             <hr style={{ margin: '1px 0 3px 0', padding: '0' }}></hr>
                             <Input
-                                style={{ height: '200px', margin: '0 15px 0 15px' }}
+                                style={{ height: '200px', margin: '19px 15px 0 20px' }}
                                 placeholder="Açıklama"
                                 type="textarea"
                                 name="jobDescription"
