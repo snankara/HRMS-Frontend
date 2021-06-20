@@ -24,7 +24,7 @@ import WorkingTimeService from 'services/workingTimeService';
 import JobAdvertisementService from 'services/jobAdvertisementService';
 
 import moment from 'moment';
-import { toast } from 'react-toastify';
+import 'moment/locale/tr';
 
 export default function JobAdvertisementAdd() {
 
@@ -36,12 +36,18 @@ export default function JobAdvertisementAdd() {
     const [workingTimes, setWorkingTimes] = useState([])
 
     const [selectedCity, setSelectedCity] = useState({})
-    const [selectedDate, setSelectedDate] = useState({})
+    const [selectedDate, setSelectedDate] = useState(moment().format('ll'))
     const [selectedJobPosition, setSelectedJobPosition] = useState({})
     const [selectedTypeOfWorking, setSelectedTypeOfWorking] = useState({})
     const [selectedWorkingTime, setSelectedWorkingTime] = useState({})
 
     var employer = { id: 50 };
+
+    const yesterday = moment().subtract(1, 'day');
+    const disablePastDt = current => {
+        return current.isAfter(yesterday);
+    };
+
 
     useEffect(() => {
         let cityService = new CityService();
@@ -65,7 +71,6 @@ export default function JobAdvertisementAdd() {
             typeOfWorking: "",
             workingTime: "",
             endDate: "",
-            startDate: "",
             jobDescription: "",
             numberOfPosition: "",
             minSalary: "",
@@ -80,7 +85,8 @@ export default function JobAdvertisementAdd() {
             values.typeOfWorking = selectedTypeOfWorking
             values.workingTime = selectedWorkingTime
             values.employer = employer;
-            jobAdvertisementService.add(values).then(toast.success("İlanınız Onaylanmak Üzere Sistem Personeline İletilmiştir."),setModal(false));
+            { console.log(values) }
+            // jobAdvertisementService.add(values).then(toast.success("İlanınız Onaylanmak Üzere Sistem Personeline İletilmiştir."),setModal(false));
         }
     });
 
@@ -132,7 +138,7 @@ export default function JobAdvertisementAdd() {
                                     pattern="^-?[0-9]\d*\.?\d*$"
                                     onChange={handleChange}
                                     required
-                                    style={{ margin: '20px 0 8px 0'}}
+                                    style={{ margin: '20px 0 8px 0' }}
                                 ></Input>
 
                                 <UncontrolledDropdown>
@@ -202,15 +208,18 @@ export default function JobAdvertisementAdd() {
                                     required
                                 ></Input>
 
-                                <div style={{ margin: '20px 0 8px 0'}}>
-                                <Datetime
-                                    name="endDate"
-                                    timeFormat={false}
-                                    inputProps={{ placeholder: "Bir Tarih Giriniz" }}
-                                    onChange={setSelectedDate}
-                                />
+                                <div style={{ margin: '20px 0 8px 0' }}>
+                                    <Datetime
+                                        name="endDate"
+                                        timeFormat={false}
+                                        locale="tr"
+                                        inputProps={{ placeholder: "Son Başvuru Tarihi Giriniz" }}
+                                        onChange={setSelectedDate}
+                                        closeOnSelect
+                                        isValidDate={disablePastDt}
+                                    />
                                 </div>
-                                
+
                                 <UncontrolledDropdown>
                                     <DropdownToggle
                                         style={{ margin: '12px 0 0 -15px' }}
@@ -229,7 +238,6 @@ export default function JobAdvertisementAdd() {
                                         {cities.map(city => (
                                             <DropdownItem
                                                 key={city.id}
-                                                href="#"
                                                 onClick={() => setSelectedCity(city)}
                                             >
                                                 {city.cityName}
