@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Button,
   NavItem,
   NavLink,
   Nav,
@@ -9,17 +8,19 @@ import {
   Container,
   Row,
   Col,
-  UncontrolledTooltip,
 } from "reactstrap";
 
 import EmployerProfileHeader from "components/Headers/EmployerProfileHeader.js";
 import ProfileFooter from "components/Footers/ProfileFooter.js";
 import EmployerProfileNav from "components/Navbars/EmployerProfileNav.js";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, Zoom } from "react-toastify";
+import EmployerService from "services/employerService";
+import EmployerViewAndUpdate from "./EmployerViewAndUpdate";
 
 function EmployerProfilePage() {
   const [pills, setPills] = useState("2");
- 
+  const [employer, setEmployer] = useState({})
+  
   useEffect(() => {
     document.body.classList.add("profile-page");
     document.body.classList.add("sidebar-collapse");
@@ -31,41 +32,23 @@ function EmployerProfilePage() {
       document.body.classList.remove("sidebar-collapse");
     };
   }, []);
+
+  useEffect(() => {
+      let employerService = new EmployerService();
+      employerService.findById(50).then(result => setEmployer(result.data.data))
+  }, []);
+
   return (
-    
+
     <>
-    <ToastContainer position="bottom-right" />
+      <ToastContainer transition={Zoom} position="bottom-right" />
       <EmployerProfileNav />
       <div className="wrapper">
-        <EmployerProfileHeader />
+        <EmployerProfileHeader employer={employer}/>
         <div className="section">
           <Container>
             <div className="button-container">
-              <Button className="btn-round" color="info" size="lg">
-                Follow
-              </Button>
-              <Button
-                className="btn-round btn-icon"
-                color="default"
-                id="tooltip515203352"
-                size="lg"
-              >
-                <i className="fab fa-twitter"></i>
-              </Button>
-              <UncontrolledTooltip delay={0} target="tooltip515203352">
-                Follow me on Twitter
-              </UncontrolledTooltip>
-              <Button
-                className="btn-round btn-icon"
-                color="default"
-                id="tooltip340339231"
-                size="lg"
-              >
-                <i className="fab fa-instagram"></i>
-              </Button>
-              <UncontrolledTooltip delay={0} target="tooltip340339231">
-                Follow me on Instagram
-              </UncontrolledTooltip>
+              <EmployerViewAndUpdate employer={employer}/>
             </div>
             <h3 className="title">About me</h3>
             <h5 className="description">

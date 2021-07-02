@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
-// reactstrap components
 import {
   Collapse,
   NavbarBrand,
@@ -50,7 +49,6 @@ function EmployeeProfileNav() {
         <Container>
           <div className="navbar-translate">
             <NavbarBrand
-              href="https://demos.creative-tim.com/now-ui-kit-react/index?ref=nukr-examples-navbar"
               target="_blank"
               id="navbar-brand"
             >
@@ -84,17 +82,8 @@ function EmployeeProfileNav() {
                   Anasayfaya Dön
                 </NavLink>
               </NavItem>
-              {/* <NavItem>
-                <JobAdvertisementAdd />
-              </NavItem> */}
-              {/* <NavItem>
-                <NavLink href="#contact">
-                  BİR SORUN MU VAR ?
-                </NavLink>
-              </NavItem> */}
               <NavItem>
                 <NavLink
-                  href="https://twitter.com/CreativeTim?ref=creativetim"
                   target="_blank"
                   id="twitter-tooltip"
                 >
@@ -107,7 +96,6 @@ function EmployeeProfileNav() {
               </NavItem>
               <NavItem>
                 <NavLink
-                  href="https://www.facebook.com/CreativeTim?ref=creativetim"
                   target="_blank"
                   id="facebook-tooltip"
                 >
@@ -120,7 +108,6 @@ function EmployeeProfileNav() {
               </NavItem>
               <NavItem>
                 <NavLink
-                  href="https://www.instagram.com/CreativeTimOfficial?ref=creativetim"
                   target="_blank"
                   id="instagram-tooltip"
                 >

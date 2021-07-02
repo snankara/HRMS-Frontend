@@ -5,6 +5,10 @@ export default class JobAdvertisementService{
         return axios.get("http://localhost:8080/api/jobAdvertisements/getAll")
     }
 
+    dataFilter(cityName, workingTimeName){
+        return axios.get("http://localhost:8080/api/jobAdvertisements/findByCityNameAndWorkingTime?cityName="+cityName+"&workingTimeName="+workingTimeName)
+    }
+
     add(values){
         return axios.post("http://localhost:8080/api/jobAdvertisements/add", values)
     }
@@ -12,6 +16,11 @@ export default class JobAdvertisementService{
     getByIsActive(isActive){
         return axios.get(`http://localhost:8080/api/jobAdvertisements/getByIsActive?isActive=${isActive}`);
     }
+
+    findByEmployerId(id){
+        return axios.get(`http://localhost:8080/api/jobAdvertisements/findByEmployerId?id=${id}`);
+    }
+
 
     activateJobAdvertisement(jobAdvertisement){
         return axios.put(`http://localhost:8080/api/jobAdvertisements/activateJobAdvertisement`,jobAdvertisement)

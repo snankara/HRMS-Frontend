@@ -1,6 +1,7 @@
-import JobAdvertisementAdd from "pages/JobAdvertisementAdd";
+import CurriculumVitaeAdd from "pages/CurriculumVitaeAdd";
 import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
+
 import {
   Collapse,
   NavbarBrand,
@@ -12,7 +13,7 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 
-function EmployerProfileNav() {
+function CandidateProfileNav() {
   const [navbarColor, setNavbarColor] = useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = useState(false);
 
@@ -84,7 +85,8 @@ function EmployerProfileNav() {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <JobAdvertisementAdd />
+              <CurriculumVitaeAdd/>
+
               </NavItem>
               <NavItem>
                 <NavLink href="#contact">
@@ -135,4 +137,4 @@ function EmployerProfileNav() {
   );
 }
 
-export default EmployerProfileNav;
+export default CandidateProfileNav;

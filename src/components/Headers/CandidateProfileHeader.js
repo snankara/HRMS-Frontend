@@ -1,11 +1,9 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { createRef, useEffect } from "react";
 
 import { Container } from "reactstrap";
-import JobAdvertisementService from "services/jobAdvertisementService";
 
-function EmployerProfileHeader({employer}) {
+function CandidateProfileHeader() {
   let pageHeader = createRef();
-  const [jobAdvertisements, setJobAdvertisements] = useState([])
 
   useEffect(() => {
     if (window.innerWidth > 991) {
@@ -20,12 +18,6 @@ function EmployerProfileHeader({employer}) {
       };
     }
   });
-
-  useEffect(() => {
-    let jobAdvertisementService = new JobAdvertisementService();
-    jobAdvertisementService.findByEmployerId(50).then(result => setJobAdvertisements(result.data.data))
-  }, []);
-
   return (
     <>
       <div
@@ -44,11 +36,11 @@ function EmployerProfileHeader({employer}) {
           <div className="photo-container">
             <img alt="..." src={require("assets/img/ryan.jpg").default}></img>
           </div>
-          <h3 className="title">{employer.companyName}</h3>
-          <p className="category">{employer.webSite}</p>
+          <h3 className="title">Candidate Name</h3>
+          {/* <p className="category">Company Name</p> */}
           <div className="content">
             <div className="social-description">
-              <h2>{jobAdvertisements.length}</h2>
+              <h2>26</h2>
               <p>İş İlanları</p>
             </div>
             <div className="social-description">
@@ -62,4 +54,4 @@ function EmployerProfileHeader({employer}) {
   );
 }
 
-export default EmployerProfileHeader;
+export default CandidateProfileHeader;

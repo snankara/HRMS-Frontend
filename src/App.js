@@ -1,3 +1,5 @@
+import CandidateProfilePage from "pages/CandidateProfilePage";
+
 import EmployeeProfilePage from "pages/EmployeeProfilePage";
 import EmployerProfilePage from "pages/EmployerProfilePage";
 import HomePage from "pages/HomePage";
@@ -29,8 +31,11 @@ function App() {
             <Route exact path="/employer-profile-page" component={EmployerProfilePage}/>
 
             <Route exact path="/employee-profile-page" component={EmployeeProfilePage}/>
+
+            <Route exact path="/candidate-profile-page" component={CandidateProfilePage}/>
             
-          </Switch>
+            
+          </Switch> 
         </Switch>
       </BrowserRouter>
     </div>

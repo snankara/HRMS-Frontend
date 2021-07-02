@@ -1,21 +1,20 @@
-import moment from 'moment';
 import React from 'react'
 import { toast } from 'react-toastify';
 import { Button, Card, CardHeader, Col, Row } from 'reactstrap';
-import JobAdvertisementService from 'services/jobAdvertisementService';
+import EmployerService from 'services/employerService';
 
-export default function JobAdvertisementListForApproval({jobAdvertisements}) {
+export default function EmployerUpdateApprovalsList({employerUpdateApprovals}) {
 
-    function approve(jobAdvertisement) {
-        let jobAdvertisementService = new JobAdvertisementService();
-        jobAdvertisementService.activateJobAdvertisement(jobAdvertisement).then(toast.success("Onaylandı !")); 
+    function approve(employerUpdateApproval) {
+        let employerService = new EmployerService();
+        employerService.confirmUpdate(employerUpdateApproval).then(toast.success("İşveren Güncellemesi Onaylandı !")); 
     }
 
     return (
         <div>
             <Row>
-                {jobAdvertisements.map(jobAdvertisement => (
-                    <Col key={jobAdvertisement.id} md="6">
+                {employerUpdateApprovals.map(employerUpdateApproval => (
+                    <Col key={employerUpdateApproval.id} md="6">
                         <Card className="ds" style={{ borderRadius: '25px' }}>
                             <CardHeader>
                                 <div className="team-player">
@@ -29,32 +28,34 @@ export default function JobAdvertisementListForApproval({jobAdvertisements}) {
                                         </div>
                                         <div className="ds">
                                             <h4 className="modal-title">
-                                                {jobAdvertisement.employer.companyName}
+                                                {employerUpdateApproval.companyName}
                                             </h4>
-                                            <p className="category text-info">{jobAdvertisement.jobPosition.positionName}</p>
                                         </div>
                                     </div>
                                     <div className="mtx10 ds">
                                         <div>
                                             <h5 className="ml-xl-3 ds">
-                                                Maaş :
+                                                Telefon :
                                             </h5>
-                                            <span> {jobAdvertisement.minSalary} - {jobAdvertisement.maxSalary}₺</span> 
+                                            <span> {employerUpdateApproval.phoneNumber}</span> 
                                         </div>
                                         <div>
                                             <h5 className="ml-xl-3 ds">
-                                                Başvuru :
+                                                E-mail :
+                                            </h5>
+                                            <span> {employerUpdateApproval.email}</span> 
+                                        </div>
+
+                                        <div>
+                                            <h5 className="ml-xl-3 ds">
+                                                Web Site :
                                             </h5>
                                             {' '}
-                                            <span className="ds"> {!jobAdvertisement.startDate && 'Onayda Bekliyor'} {jobAdvertisement.startDate} |
-                                                {moment(jobAdvertisement.endDate).format(" ll")}</span>
+                                            <span> {employerUpdateApproval.webSite}</span> 
                                         </div>
-                                        <h6 className="ml-xl-3">
-                                            {jobAdvertisement.city.cityName}
-                                        </h6>
                                     </div>
-                                    <div className="ds fl-r position-absolute mr5">
-                                        <Button className="btn-round btn-info" color="info" onClick={() => approve(jobAdvertisement)}>
+                                    <div className="position-absolute mr5">
+                                        <Button className="btn-round btn-info" color="info" onClick={() => approve(employerUpdateApproval)}>
                                             <i className="now-ui-icons ui-1_check mr5"></i>
                                             <span>Onayla</span>
                                         </Button>

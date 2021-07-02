@@ -1,14 +1,13 @@
-import React from "react";
+import React, { createRef, useEffect } from "react";
 
-// reactstrap components
 import { Container } from "reactstrap";
 
-// core components
 
-function EmployeeProfileHeader() {
-  let pageHeader = React.createRef();
+function EmployeeProfileHeader(props) {
 
-  React.useEffect(() => {
+  let pageHeader = createRef();
+
+  useEffect(() => {
     if (window.innerWidth > 991) {
       const updateScroll = () => {
         let windowScrollTop = window.pageYOffset / 3;
@@ -17,10 +16,11 @@ function EmployeeProfileHeader() {
       };
       window.addEventListener("scroll", updateScroll);
       return function cleanup() {
-        window.removeEventListener("scroll", updateScroll);
+        window.removeEventListener("scroll", updateScroll); 
       };
     }
   });
+
   return (
     <>
       <div
@@ -39,21 +39,20 @@ function EmployeeProfileHeader() {
           <div className="photo-container">
             <img alt="..." src={require("assets/img/ryan.jpg").default}></img>
           </div>
-          <h3 className="title">Employee Name</h3>
-          {/* <p className="category">Company Name</p> */}
-          <div className="content">
+          <h3 className="title">{props.employee.firstName} {props.employee.lastName}</h3>
+          <div className="content" style={{maxWidth:'500px'}}>
             <div className="social-description">
-              <h2>10</h2>
-              <p>Onayda Bekleyen İlanlar</p>
+              <h2>{props.jobAdvertisements.length}</h2>
+              <span>Onay Bekleyen İlanlar</span>
             </div>
-            <div className="social-description" style={{marginLeft:'25px'}}>
-              <h2>15</h2>
-              <p>Onayda Bekleyen İşverenler</p>
+            <div className="social-description ml-3">
+              <h2>{props.employerApprovals.length}</h2>
+              <span>Onay Bekleyen İşverenler</span>
             </div>
-            {/* <div className="social-description">
-              <h2>48</h2>
-              <p>Bookmarks</p>
-            </div> */}
+            <div className="social-description ml-3">
+              <h2>{props.employerUpdateApprovals.length}</h2>
+              <span>Güncelleme Onayı Bekleyen İşverenler</span>
+            </div>
           </div>
         </Container>
       </div>

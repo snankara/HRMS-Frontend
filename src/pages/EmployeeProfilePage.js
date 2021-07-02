@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-    Button,
     NavItem,
     NavLink,
     Nav,
@@ -9,17 +8,26 @@ import {
     Container,
     Row,
     Col,
-    UncontrolledTooltip,
 } from "reactstrap";
 
 import EmployeeProfileHeader from "components/Headers/EmployeeProfileHeader.js";
 import ProfileFooter from "components/Footers/ProfileFooter.js";
 import EmployeeProfileNav from "components/Navbars/EmployeeProfileNav.js";
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, Zoom } from 'react-toastify'
 import JobAdvertisementListForApproval from "./JobAdvertisementListForApproval";
+import EmployeeService from "services/employeeService";
+import JobAdvertisementService from "services/jobAdvertisementService";
+import EmployerService from "services/employerService";
+import EmployerUpdateApprovalsList from "./EmployerUpdateApprovalsList";
+import EmployeeViewAndUpdate from "./EmployeeViewAndUpdate";
 
 function EmployeeProfilePage() {
+
     const [pills, setPills] = useState("1");
+    const [employee, setEmployee] = useState({})
+    const [jobAdvertisements, setJobAdvertisements] = useState([])
+    const [employerUpdateApprovals, setEmployerUpdateApprovals] = useState([])
+    const [employerApprovals, setEmployerApprovals] = useState([])
 
     useEffect(() => {
         document.body.classList.add("profile-page");
@@ -33,40 +41,40 @@ function EmployeeProfilePage() {
         };
     }, []);
 
+    useEffect(() => {
+        let employeeService = new EmployeeService();
+        employeeService.findById(62).then(result => setEmployee(result.data.data))
+
+        let jobAdvertisementService = new JobAdvertisementService();
+        jobAdvertisementService.getByIsActive(false).then(result => setJobAdvertisements(result.data.data))
+
+        let employerService = new EmployerService();
+        employerService.findByUpdateConfirmation(false).then(result => setEmployerUpdateApprovals(result.data.data))
+        employerService.findByVerifiedByEmployee(false).then(result => setEmployerApprovals(result.data.data))        
+
+    }, []);
+
+
+    useEffect(() => {
+        let jobAdvertisementService = new JobAdvertisementService();
+        jobAdvertisementService.getByIsActive(false).then(result => setJobAdvertisements(result.data.data))
+    }, [])
+
     return (
         <>
-            <ToastContainer position="bottom-right" />
-            <EmployeeProfileNav />
+            <ToastContainer transition={Zoom} position="bottom-right" />
+            <EmployeeProfileNav employee={employee}/>
             <div className="wrapper">
-                <EmployeeProfileHeader />
+                <EmployeeProfileHeader 
+                employee={employee} 
+                jobAdvertisements={jobAdvertisements}
+                employerUpdateApprovals={employerUpdateApprovals}
+                employerApprovals={employerApprovals}
+                />
                 <div className="section">
                     <Container>
                         <div className="button-container">
-                            <Button className="btn-round" color="info" size="lg">
-                                Follow
-                            </Button>
-                            <Button
-                                className="btn-round btn-icon"
-                                color="default"
-                                id="tooltip515203352"
-                                size="lg"
-                            >
-                                <i className="fab fa-twitter"></i>
-                            </Button>
-                            <UncontrolledTooltip delay={0} target="tooltip515203352">
-                                Follow me on Twitter
-                            </UncontrolledTooltip>
-                            <Button
-                                className="btn-round btn-icon"
-                                color="default"
-                                id="tooltip340339231"
-                                size="lg"
-                            >
-                                <i className="fab fa-instagram"></i>
-                            </Button>
-                            <UncontrolledTooltip delay={0} target="tooltip340339231">
-                                Follow me on Instagram
-                            </UncontrolledTooltip>
+                            <EmployeeViewAndUpdate employee={employee}/>
                         </div>
                         <h3 className="title">About me</h3>
                         <h5 className="description">
@@ -124,40 +132,13 @@ function EmployeeProfilePage() {
                                     </Nav>
                                 </div>
                             </Col>
-                            <Col style={{marginTop:'50px'}}>
+                            <Col style={{marginTop:'50px'}}> 
                             <TabContent activeTab={"pills" + pills}>
                                 <TabPane tabId="pills1">
-                                    <JobAdvertisementListForApproval />
+                                    <JobAdvertisementListForApproval jobAdvertisements={jobAdvertisements}/> 
                                 </TabPane>
                                 <TabPane tabId="pills2">
-                                    <Col className="ml-auto mr-auto" md="10">
-                                        <Row className="collections">
-                                            <Col md="6">
-                                                <img
-                                                    alt="..."
-                                                    className="img-raised"
-                                                    src={require("assets/img/bg6.jpg").default}
-                                                ></img>
-                                                <img
-                                                    alt="..."
-                                                    className="img-raised"
-                                                    src={require("assets/img/bg11.jpg").default}
-                                                ></img>
-                                            </Col>
-                                            <Col md="6">
-                                                <img
-                                                    alt="..."
-                                                    className="img-raised"
-                                                    src={require("assets/img/bg7.jpg").default}
-                                                ></img>
-                                                <img
-                                                    alt="..."
-                                                    className="img-raised"
-                                                    src={require("assets/img/bg8.jpg").default}
-                                                ></img>
-                                            </Col>
-                                        </Row>
-                                    </Col>
+                                    <EmployerUpdateApprovalsList  employerUpdateApprovals={employerUpdateApprovals}/>
                                 </TabPane>
                                 <TabPane tabId="pills3">
                                     <Col className="ml-auto mr-auto" md="10">
