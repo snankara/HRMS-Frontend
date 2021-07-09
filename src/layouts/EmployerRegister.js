@@ -4,10 +4,7 @@ import { DropdownItem } from 'reactstrap'
 export default function EmployerRegister() {
     return (
         <div>
-            <DropdownItem>
-                Kayıt Ol
-            </DropdownItem>
-
+            <i className="now-ui-icons u users_single-02"></i>Kayıt Ol
         </div>
     )
 }

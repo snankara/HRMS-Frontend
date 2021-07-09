@@ -14,7 +14,7 @@ export default function HomePage() {
                 <Dashboard/>
             </div>
         </div>
-        <HomePageFooter/>
+        <HomePageFooter/> 
     </>
     )
 }

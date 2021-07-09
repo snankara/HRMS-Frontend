@@ -97,7 +97,7 @@ function EmployerProfileNav() {
                   id="twitter-tooltip"
                 >
                   <i className="fab fa-twitter"></i>
-                  <p className="d-lg-none d-xl-none">Twitter</p>
+                  <p className="d-lg-none d-xl-none">Twitter</p> 
                 </NavLink>
                 <UncontrolledTooltip target="#twitter-tooltip">
                   Follow us on Twitter

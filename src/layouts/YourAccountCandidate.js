@@ -1,18 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import {
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-} from "reactstrap";
+import { Link } from 'react-router-dom'
+import { DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
 
-export default function YourAccountEmployer({ signOut }) {
+export default function YourAccountCandidate() {
     return (
         <div>
             <UncontrolledDropdown nav>
                 <DropdownToggle
                     caret
+                    color="default"
                     href="#pablo"
                     nav
                     onClick={(e) => e.preventDefault()}
@@ -21,7 +17,7 @@ export default function YourAccountEmployer({ signOut }) {
                     <p>Hesabınız</p>
                 </DropdownToggle>
                 <DropdownMenu className="mt-1">
-                    <DropdownItem tag={Link} to="/employer-profile-page">
+                    <DropdownItem tag={Link} to="/candidate-profile-page">
                         <div>
                             <i className="now-ui-icons design_bullet-list-67 mr-2"></i>
                             Profiliniz
@@ -29,7 +25,7 @@ export default function YourAccountEmployer({ signOut }) {
                     </DropdownItem>
                     <DropdownItem divider></DropdownItem>
                     <DropdownItem
-                        onClick={signOut}
+                        // onClick={signOut}
                     >
                         <div>
                             <i className="now-ui-icons arrows-1_share-66 mr-2"></i>
@@ -39,5 +35,6 @@ export default function YourAccountEmployer({ signOut }) {
                 </DropdownMenu>
             </UncontrolledDropdown>
         </div>
+
     )
 }

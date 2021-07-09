@@ -10,7 +10,7 @@ export default function CandidateRegister() {
              id="candidateLogin"
              size="lg"
             >  
-                Kayıt Ol
+                Kayıt Ol 
             </Button>
         </div>
     )

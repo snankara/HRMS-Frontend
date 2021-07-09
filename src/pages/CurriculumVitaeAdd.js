@@ -181,7 +181,7 @@ export default function CurriculumVitaeAdd() {
                             <TechnologyAdd getTechnology={handleTechnologies} />
 
                             <Input
-                                style={{ height: '200px', margin: '19px 15px 0 20px' }}
+                                style={{ height: '200px', margin: '19px 15px 0 20px' }} 
                                 placeholder="Ön Yazı"
                                 type="textarea"
                                 name="coverLetter"

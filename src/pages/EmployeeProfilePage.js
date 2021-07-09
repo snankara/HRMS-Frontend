@@ -63,7 +63,7 @@ function EmployeeProfilePage() {
     return (
         <>
             <ToastContainer transition={Zoom} position="bottom-right" />
-            <EmployeeProfileNav employee={employee}/>
+            {/* <EmployeeProfileNav employee={employee}/>  */}
             <div className="wrapper">
                 <EmployeeProfileHeader 
                 employee={employee} 
@@ -175,7 +175,7 @@ function EmployeeProfilePage() {
                         </Row>
                     </Container>
                 </div>
-                <ProfileFooter />
+                {/* <ProfileFooter /> */}
             </div>
         </>
     );

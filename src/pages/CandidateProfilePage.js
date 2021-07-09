@@ -38,7 +38,7 @@ function CandidateProfilePage() {
 
     <>
       <ToastContainer transition={Zoom} position="bottom-right" />
-      <CandidateProfileNav />
+      {/* <CandidateProfileNav /> */}
       <div className="wrapper">
         <CandidateProfileHeader />
         <div className="section">
@@ -169,7 +169,7 @@ function CandidateProfilePage() {
             </Row>
           </Container>
         </div>
-        <ProfileFooter />
+        {/* <ProfileFooter /> */}
       </div>
     </>
   );

@@ -1,16 +1,15 @@
-/*eslint-disable*/
+
+import CandidateAuth from "layouts/CandidateAuth";
 import CandidateLogin from "layouts/CandidateLogin";
 import CandidateRegister from "layouts/CandidateRegister";
-import React from "react";
+import React, { createRef, useEffect, useState } from "react";
 
-// reactstrap components
 import { Container } from "reactstrap";
-// core components
 
 function Header() {
-  let pageHeader = React.createRef();
+  let pageHeader = createRef();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (window.innerWidth > 991) {
       const updateScroll = () => {
         let windowScrollTop = window.pageYOffset / 3;
@@ -38,19 +37,18 @@ function Header() {
         <Container>
           <div className="content-center brand">
             <img
-              alt="..."
+              alt="Logo"
               className="n-logo img"
               src={require("assets/img/logo3.png").default}
             ></img>
             <h1 className="h1-seo">KARİYER PLATFORMUNUZ.</h1>
             <h3>Hayalinizdeki işe son bir adım . . .</h3>
             <div className="text-center">
-            <CandidateLogin/>
-            <CandidateRegister/> 
+              <CandidateAuth/> 
             </div>
           </div>
-        </Container>     
-         </div>
+        </Container>
+      </div>
     </>
   );
 }

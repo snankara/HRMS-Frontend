@@ -11,7 +11,7 @@ export default function CandidateLogin() {
              size="lg"
             >
                 Giriş Yap
-            </Button>
+            </Button> 
         </div>
     )
 }

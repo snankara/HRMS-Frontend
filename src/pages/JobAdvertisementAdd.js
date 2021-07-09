@@ -95,9 +95,11 @@ export default function JobAdvertisementAdd() {
             <NavLink
                 color="primary"
                 className="mr-1"
-                onClick={() => setModal(true)}
+                onClick={() => setModal(true)} 
                 href="#"
             >
+                <i className="now-ui-icons location_world mr-1"></i>
+
                 İş İlanı Oluştur
             </NavLink>
 

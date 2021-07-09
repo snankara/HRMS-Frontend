@@ -1,7 +1,11 @@
-import EmployerAuthenticate from "layouts/EmployerAuthenticate";
+
+import EmployerAuth from "layouts/EmployerAuth";
+import YourAccountCandidate from "layouts/YourAccountCandidate";
 import YourAccountEmployer from "layouts/YourAccountEmployer";
-import React, {useEffect, useState} from "react";
-import { useHistory } from "react-router-dom";
+import JobAdvertisementAdd from "pages/JobAdvertisementAdd";
+import CurriculumVitaeAdd from "pages/CurriculumVitaeAdd";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 
 import {
   Collapse,
@@ -14,11 +18,12 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 
-function Navi() {
+function Navi(props) {
   const [navbarColor, setNavbarColor] = useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = useState(false);
-  const [isAuthenticatedEmployer, setisAuthenticatedEmployer] = useState(true)
+  const [isAuthenticatedEmployer, setisAuthenticatedEmployer] = useState(false)
   const history = useHistory()
+  let location = useLocation();
 
   function handleSignOut() {
     setisAuthenticatedEmployer(false)
@@ -92,43 +97,65 @@ function Navi() {
             navbar
           >
             <Nav navbar>
+              {location.pathname === "/" &&
+                <NavItem>
+                  <NavLink
+                    href="#pablo"
+                  >
+                    <i className="now-ui-icons travel_info mr-1"></i>
+                    <p>Hakkımızda</p>
+                  </NavLink>
+                </NavItem>
+              }
+              {location.pathname !== "/" &&
+                <NavItem>
+                  <NavLink to="/" tag={Link}>
+                    <i className="now-ui-icons arrows-1_share-66 fa-rotate-270 mr-1"></i>
+                    <p>Anasayfaya Dön</p>
+                  </NavLink>
+                </NavItem>
+              }
 
-            <NavItem>
-                <NavLink
-                  href="#pablo"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document
-                      .getElementById("dashboard-section")
-                      .scrollIntoView();
-                  }}
-                >
-                  <i className="now-ui-icons travel_info"></i>
-                  <p>Hakkımızda</p>
+              {location.pathname === "/" &&
+                <NavItem>
+                  <NavLink
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document
+                        .getElementById("dashboard-section")
+                        .scrollIntoView();
+                    }}
+                  >
+                    <i className="now-ui-icons business_badge mr-1"></i>
+                    <p>İş İlanları</p>
+                  </NavLink>
+                </NavItem>
+              }
+
+              {isAuthenticatedEmployer &&
+                <NavItem>
+                  <JobAdvertisementAdd />
+                </NavItem>
+              }
+
+              {location.pathname === "/candidate-profile-page" &&
+                <NavItem>
+                  <CurriculumVitaeAdd />
+                </NavItem>
+              }
+
+              {isAuthenticatedEmployer ? <YourAccountEmployer signOut={handleSignOut} /> : <EmployerAuth signIn={handleSignIn} />}
+
+              <NavItem>
+                <NavLink href="#contact">
+                  <i className="now-ui-icons ui-2_chat-round mr-1"></i>
+                  <p>BİR SORUN MU VAR ?</p>
                 </NavLink>
               </NavItem>
 
               <NavItem>
                 <NavLink
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document
-                      .getElementById("dashboard-section")
-                      .scrollIntoView();
-                  }}
-                >
-                  <i className="now-ui-icons business_badge"></i>
-                  <p>İş İlanları</p>
-                </NavLink>
-              </NavItem>
-
-              {isAuthenticatedEmployer? <YourAccountEmployer signOut={handleSignOut}/>: <EmployerAuthenticate signIn={handleSignIn}/>}
-        
-
-              <NavItem>
-                <NavLink
-                  href="https://twitter.com/CreativeTim?ref=creativetim" 
                   target="_blank"
                   id="twitter-tooltip"
                 >
@@ -141,7 +168,6 @@ function Navi() {
               </NavItem>
               <NavItem>
                 <NavLink
-                  href="https://www.facebook.com/CreativeTim?ref=creativetim"
                   target="_blank"
                   id="facebook-tooltip"
                 >
@@ -154,7 +180,6 @@ function Navi() {
               </NavItem>
               <NavItem>
                 <NavLink
-                  href="https://www.instagram.com/CreativeTimOfficial?ref=creativetim"
                   target="_blank"
                   id="instagram-tooltip"
                 >
